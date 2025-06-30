@@ -6,7 +6,7 @@ export default function Card({ product }: { product: Product }) {
   return (
     <>
       <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
-        <Link href={`/product/detail/${product.id}`}>
+        <Link href={`/product/detail/${product?.id}`}>
           <Image
             width={100}
             height={100}
@@ -16,16 +16,16 @@ export default function Card({ product }: { product: Product }) {
           />
         </Link>
         <div className="px-5 pb-5">
-          <Link href={`/product/${product.id}`}>
+          <Link href={`/product/${product?.id}`}>
             <h5 className="truncate text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
-              {product.title}
+              {product?.title}
             </h5>
           </Link>
           <div className="flex items-center mt-2.5 mb-5">
             <div className="flex items-center space-x-1 rtl:space-x-reverse">
               {[...Array(5)].map((_, i) => (
                 <svg
-                  key={`${product.id}-star-${i}`}
+                  key={`${product?.id}-star-${i}`}
                   className="w-4 h-4 text-yellow-300"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
@@ -42,7 +42,7 @@ export default function Card({ product }: { product: Product }) {
           </div>
           <div className="flex items-center justify-between">
             <span className="text-3xl font-bold text-gray-900 dark:text-white">
-              ${product.price}
+              ${product?.price}
             </span>
             <button
               type="button"

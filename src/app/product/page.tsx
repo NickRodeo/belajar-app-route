@@ -1,15 +1,19 @@
+"use client";
 import { getProducts } from "@/service/product";
 import Card from "./card";
 import { Metadata } from "next";
+import useSWR from "swr";
+import { useEffect } from "react";
+import Loading from "./loading";
 
-export const metadata: Metadata = {
-  title: "Product",
-  description: "Product Page",
-  icons: "/product.jpg",
-};
+// export const metadata: Metadata = {
+//   title: "Product",
+//   description: "Product Page",
+//   icons: "/product.jpg",
+// };
 
 type props = { params: { product: string[] } };
-export default async function Product() {
+export default function Product() {
   // const res = await fetch("https://fakestoreapi.in/api/products", {
   //   method: "GET",
   //   cache: "force-cache",
@@ -24,17 +28,27 @@ export default async function Product() {
   //   },
   // });
   // const data = await res.json();
-  const products = await getProducts(
-    `${process.env.NEXT_PUBLIC_URL}/api/products`
+  const fetcher = (url: string) => fetch(url).then((res) => res.json());
+  const { data, error, isLoading } = useSWR(
+    `${process.env.NEXT_PUBLIC_URL}/api/products`,
+    fetcher
   );
-  console.log(products);
+  // const products = await getProducts(
+  //   `${process.env.NEXT_PUBLIC_URL}/api/products`
+  // );
+  const products = data?.products;
+
   return (
     <>
-      <div className="place-items-center grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 px-3 gap-2">
-        {products.map((product: any) => (
-          <Card key={product.id} product={product} />
-        ))}
-      </div>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <div className="place-items-center grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 px-3 gap-2">
+          {products.map((product: any) => (
+            <Card key={product?.id} product={product} />
+          ))}
+        </div>
+      )}
     </>
   );
 }
