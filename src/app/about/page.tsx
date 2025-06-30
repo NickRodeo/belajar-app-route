@@ -1,16 +1,15 @@
 import { Metadata } from "next";
-import Image from "next/image";
 
 export const metadata: Metadata = {
-  title: "Home",
-  description: "Home Page",
+  title: "About",
+  description: "About Page",
   icons: "/product.jpg",
 };
 
-export default function Home() {
+export default function About() {
   return (
     <>
-      <h1>Home</h1>
+      <h1>Ini About</h1>
     </>
   );
 }
